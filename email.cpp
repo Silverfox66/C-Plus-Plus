@@ -2,7 +2,10 @@
 #include <regex>
 #include <string>
 
-// In your C++ folder, create a new file called 'email.cpp'. In this file, create a function called 'emailIsValid' that takes a string called 'email' as input and returns true if the email is valid and false otherwise. An email is considered valid if and only if it satisfies the requirements specified under 'Syntax requirements' on the webpage whose URL is given in the previous screenshot.
+/*In your C++ folder, create a new file called 'email.cpp'. In this file, create a function called 'emailIsValid' that takes
+a string called 'email' as input and returns true if the email is valid and false otherwise. 
+An email is considered valid if and only if it satisfies the requirements specified under 
+'Syntax requirements' on the webpage whose URL is given in the previous screenshot.*/ 
 
 bool emailIsValid(const std::string& email) {
 
