@@ -2,7 +2,9 @@
 #include <string>
 using namespace std;
 
-// Write a C++ function that takes a string 's' and a character 'c' as input and returns true if 'c' appears in 's' an odd number of times and returns false otherwise. Hint: Use the counter technique we talked about in class.
+/*Write a C++ function that takes a string 's' and a character 'c' as input and returns true if 'c' appears
+in 's' an odd number of times and returns false otherwise. Hint: Use the counter technique we talked about in class.
+*/
 
 bool appearsOddTimes(const string& s, char c) {
     int count = 0;
