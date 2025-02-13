@@ -19,6 +19,7 @@ class Account
         {
             ;
         }
+        // Create a password manager that is
         // Password must be at least 8 characters
         // Password must include at least 1 number
         // Password must include at least one special character
@@ -192,8 +193,27 @@ class Account
             {
                 return false;
             }
-            
-            if(user[0] == '.' || user[user.size() - 1] == '.')
+
+            if(domain[0] == '-' || domain[domain.size() - 1] == '-')
+            {
+                return false;
+            }
+
+            vector<string> parts;
+
+            int start = 0;
+            int end = 0;
+            for(int i = 0; i < domain.size(); i++)
+            {
+                if(domain[i] == '.')
+                {
+                    end = i - 1;
+                    parts.push_back(domain.substr(start, (end - start) + 1));
+                    start = i + 1;
+                }
+            }
+
+            if(parts[parts.size() - 1].size() < 2)
             {
                 return false;
             }
