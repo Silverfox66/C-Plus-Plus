@@ -2,9 +2,9 @@
 #include <string>
 #include <iostream>
 
-// Consider the following C++ code: array<int, 10> chars = {'w', 'n', 'a', 'q', 'X', 'i', 'F', 'g', 'b', 'E'}; string s = "ghellow";    
-// Write a function that will return true if s has at least two of the characters in chars and false otherwise.
-// (Hint: use nested for loops and a counter variable).
+/*Consider the following C++ code: array<int, 10> chars = {'w', 'n', 'a', 'q', 'X', 'i', 'F', 'g', 'b', 'E'}; string s = "ghellow";    
+Write a function that will return true if s has at least two of the characters in chars and false otherwise.
+(Hint: use nested for loops and a counter variable).*/
 
 using namespace std;
 
