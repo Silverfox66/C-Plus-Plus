@@ -1,3 +1,5 @@
+//Input integer, print fizz if divisible by 3 and buzz if divisible by 5 and write fizz buzz if both
+
 #include <iostream>
 
 int main() {
