@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+// Identify different classes of a dog
 
 using namespace std;
 
