@@ -1,4 +1,4 @@
-// sum.cpp
+// Find the sum of the first 100 natural numbers
 #include <iostream>
 
 int main() {
