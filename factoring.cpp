@@ -1,3 +1,5 @@
+//Recursive factoring program
+
 #include <iostream>
 #include <vector>
 #include <cmath>
