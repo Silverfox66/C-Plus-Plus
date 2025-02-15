@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <array>
-#include <bcrypt.h>
+//#include <bcrypt.h>
 #include <vector>
 
 using namespace std;
@@ -218,6 +218,17 @@ class Account
                 return false;
             }
 
+            for(auto s : parts)
+            {
+                for(auto c : s)
+                {
+                    if(!(isALetter(c) || isANumber(c) || (c == '-')))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
         bool isANumber(char c)
@@ -333,7 +344,7 @@ int main()
     string password;
     string username;
     string email;
-
+/*
     cout << "Please enter a password: ";
     cin >> password;
     while(!account.setPassword(password))
@@ -343,5 +354,26 @@ int main()
         cin >> password;
     }
 
+
+    cout << "Please enter an email: ";
+    cin >> password;
+    while(!account.setEmail(email))
+    {
+        cout << "The email you entered is invalid. Please enter a valid email." << endl << endl;
+        cout << "Please enter an email: ";
+        cin >> password;
+        */
+
+    ofstream outputFile("user-records.txt", ios::app);
+    //outputFile << "hello" << endl;
+    outputFile.close();
+
+    ifstream inputFile("user-records.txt");
+    string text;
+    do
+    {
+        getline(inputFile, text);
+    } while(text != "");
+    inputFile.close();
     return 0;
 }
