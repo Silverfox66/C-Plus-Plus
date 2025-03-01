@@ -15,9 +15,46 @@ class Account
         string password;
         string email;
 
+        void readFile(vector<string>& lines)
+        {
+            ifstream inputFile("user-records.txt");
+            string text;
+            do
+            {
+                getline(inputFile, text);
+
+                lines.push_back(text);
+            } while(text !="");
+            inputFile.close();
+            
+            if(lines[lines.size() - 1] == "")
+            {
+                lines.pop_back();
+            }
+        }
+        
         bool usernameIsValid(string u)
         {
-            ;
+            if(u.size() < 2)
+            {
+                return false;
+            }
+
+            vector<string> usernames;
+
+            if(usernames.size() == 0)
+            {
+                return true;
+            }
+
+            for(int i = 0; i < usernames.size(); i += 3)
+            {
+                if(usernames[i] == u)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         // Create a password manager that is
         // Password must be at least 8 characters
@@ -373,6 +410,7 @@ int main()
     do
     {
         getline(inputFile, text);
+        cout << text << endl;
     } while(text != "");
     inputFile.close();
     return 0;
