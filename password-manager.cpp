@@ -14,6 +14,7 @@ class Account
         string username;
         string password;
         string email;
+        bool isSaved = false;
 
         void readFile(vector<string>& lines)
         {
@@ -322,6 +323,23 @@ class Account
             setEmail(e);
         }
 
+        void writeFile()
+        {
+            if(isSaved)
+            {
+                return;
+            }
+            ofstream outputFile("user-records.txt", ios::app);
+
+            outputFile << username << endl;
+            outputFile << password << endl;
+            outputFile << email << endl;
+
+            outputFile.close();
+
+            isSaved = true;
+        }
+
         bool setUsername(string u)
         {
             if(usernameIsValid(u))
@@ -381,7 +399,7 @@ int main()
     string password;
     string username;
     string email;
-/*
+
     cout << "Please enter a password: ";
     cin >> password;
     while(!account.setPassword(password))
@@ -391,6 +409,14 @@ int main()
         cin >> password;
     }
 
+    cout << "Please enter a username: ";
+    cin >> username;
+    while(!account.setUsername(username))
+    {
+        cout << "The username you entered is invalid. Please enter a valid username." << endl << endl;
+        cout << "Please enter a username: ";
+        cin >> username;
+    }
 
     cout << "Please enter an email: ";
     cin >> password;
@@ -398,20 +424,6 @@ int main()
     {
         cout << "The email you entered is invalid. Please enter a valid email." << endl << endl;
         cout << "Please enter an email: ";
-        cin >> password;
-        */
-
-    ofstream outputFile("user-records.txt", ios::app);
-    //outputFile << "hello" << endl;
-    outputFile.close();
-
-    ifstream inputFile("user-records.txt");
-    string text;
-    do
-    {
-        getline(inputFile, text);
-        cout << text << endl;
-    } while(text != "");
-    inputFile.close();
-    return 0;
+        cin >> email;
+    }
 }
