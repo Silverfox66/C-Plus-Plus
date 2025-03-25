@@ -42,6 +42,7 @@ class Account
             }
 
             vector<string> usernames;
+            readFile(usernames);
 
             if(usernames.size() == 0)
             {
@@ -173,7 +174,7 @@ class Account
                 return false;
             }
 
-            string user = e.substr(0, (index + 1) - 0 + 1);
+            string user = e.substr(0, (index - 1) - 0 + 1);
             string domain = e.substr(index + 1, (e.size() -1) - (index + 1) + 1);
 
             for (auto s : user)
@@ -189,26 +190,6 @@ class Account
             }
 
             bool flag = false;
-            for(auto s : user)
-            {
-                if(isASpecial(s))
-                {
-                    if (flag)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        flag = true;
-                    }
-                }
-                else
-                {
-                    flag = false;
-                }
-            }
-
-            flag = false;
             for(auto s : user)
             {
                 if (isASpecial(s))
@@ -419,11 +400,12 @@ int main()
     }
 
     cout << "Please enter an email: ";
-    cin >> password;
+    cin >> email;
     while(!account.setEmail(email))
     {
         cout << "The email you entered is invalid. Please enter a valid email." << endl << endl;
         cout << "Please enter an email: ";
         cin >> email;
     }
+    account.writeFile();
 }
