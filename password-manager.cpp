@@ -1,10 +1,12 @@
 // Compile: g++ -IBcrypt.cpp/src -IBcrypt.cpp/include password-manager.cpp Bcrypt.cpp/src/bcrypt.cpp Bcrypt.cpp/src/blowfish.cpp
+// g++ password-manager.cpp sqlite3.o -Idatabase/sqlite-amalgamation-3500300
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <array>
 //#include <bcrypt.h>
 #include <vector>
+#include <sqlite3.h>
 
 using namespace std;
 
@@ -42,7 +44,7 @@ class Account
             }
 
             vector<string> usernames;
-            readFile(usernames);
+            /*readFile(usernames);
 
             if(usernames.size() == 0)
             {
@@ -57,6 +59,7 @@ class Account
                 }
             }
             return true;
+            */
         }
         // Create a password manager that is
         // Password must be at least 8 characters
@@ -310,6 +313,7 @@ class Account
             {
                 return;
             }
+            /*
             ofstream outputFile("user-records.txt", ios::app);
 
             outputFile << username << endl;
@@ -317,7 +321,27 @@ class Account
             outputFile << email << endl;
 
             outputFile.close();
+            */
+           sqlite3* DB;
+           int exit = 0;
+           exit = sqlite3_open("database/PasswordManager.sql", &DB);
+           if(exit)
+           {
+                std:cerr << "Error open DB" << sqlite3_errmsg(DB) << std::endl;
+                return;
+           }
 
+           string sql= "INSERT INTO Account Values('" + username + "', '" + password + "', '" + email + "');";
+
+           char* messageError;
+           exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+           if(exit != SQLITE_OK)
+           {
+            std::cerr << "Error inserting" << std::endl;
+            sqlite3_free(messageError);
+           }
+
+            sqlite3_close(DB);
             isSaved = true;
         }
 
@@ -380,16 +404,6 @@ int main()
     string password;
     string username;
     string email;
-
-    cout << "Please enter a password: ";
-    cin >> password;
-    while(!account.setPassword(password))
-    {
-        cout << "The password you entered is invalid. Please enter a valid password." << endl << endl;
-        cout << "Please enter a password: ";
-        cin >> password;
-    }
-
     cout << "Please enter a username: ";
     cin >> username;
     while(!account.setUsername(username))
@@ -397,6 +411,15 @@ int main()
         cout << "The username you entered is invalid. Please enter a valid username." << endl << endl;
         cout << "Please enter a username: ";
         cin >> username;
+    }
+    
+    cout << "Please enter a password: ";
+    cin >> password;
+    while(!account.setPassword(password))
+    {
+        cout << "The password you entered is invalid. Please enter a valid password." << endl << endl;
+        cout << "Please enter a password: ";
+        cin >> password;
     }
 
     cout << "Please enter an email: ";
