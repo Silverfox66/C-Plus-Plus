@@ -218,6 +218,186 @@ int getMaxEnergy(vector<int> energy, int k)
     return max;
 }
 
+bool canJump(vector<int>& nums)
+{
+    if(nums.size() == 1)
+    {
+        return true;
+    }
+    if(nums.size() == 0)
+    {
+        return false;
+    }
+    stack<int> jumps;
+    int index = 0;
+    int jump = 1;
+    while(true)
+    {
+        if(jump <= nums[index])
+        {
+            jumps.push(jump);
+            index += jump;
+            jump = 1;
+            if(index == nums.size() - 1)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            //backtrack
+            if(jumps.empty())
+            {
+                return false;
+            }
+            jump = jumps.top();
+            jumps.pop();
+            index -= jump;
+            jump += 1;
+        }
+    }
+}
+
+template <std::size_t M, std::size_t N>
+// Determines whether a word is in a word search according to standard word search rules.
+bool hasWord(array<array<char, N>, M>& wordSearch, const string& word) // M x N array
+{
+    bool found = false;
+    const int LENGTH = word.size();
+
+    for(int i = 0; i < M; i++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            if(wordSearch[i][j] == word[0])
+           {
+                if(j + LENGTH - 1 < N)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i][j + k];
+                    }
+                    if(temp == word)
+                    {
+                        return true;
+                    }
+                }
+
+
+                if(j - (LENGTH - 1) >= 0)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                {
+                    temp += wordSearch[i][j - k];
+                }
+                    if(temp == word || reverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }
+                
+                if(i - (LENGTH - 1) >= 0)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i - k][j];
+                    }
+                    if(temp == word || reverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }    
+                
+                
+                if (i + LENGTH - 1 < M)
+                {   
+                    string temp = "";
+                    for (int k = 0; k < LENGTH; k++)
+                    {
+                    temp += wordSearch[i + k][j];
+                    }
+                    if(temp == word | reverseString(temp) == word)
+                    {
+                    return true;
+                    };
+                }
+
+                if(i - (LENGTH - 1) >= 0 && j + LENGTH - 1 < N)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i - k][j + k];
+                    }
+                    if(temp == word || reverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }
+
+                if(i - (LENGTH - 1) >= 0 && j - (LENGTH - 1) >= 0)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i - k][j - k];
+                    }
+                    if(temp == word || reverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }
+                
+                // Case 7: South-East
+                if(i + LENGTH - 1 < M && j + LENGTH - 1 < N)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i + k][j + k];
+                    }
+                    if(temp == word || reverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }
+                // Case 8: South-West
+                if(i + LENGTH - 1 < M && j - (LENGTH - 1) >= 0)
+                {
+                    string temp = "";
+                    for(int k = 0; k < LENGTH; k++)
+                    {
+                        temp += wordSearch[i + k][j - k];
+                    }
+                    if(temp == word || oddReverseString(temp) == word)
+                    {
+                        return true;
+                    }
+                }
+
+                int end = word.length() + j - 1;
+                if(end < N)
+                {
+                    string temp = "";
+                    for(int k = j; (k - j + 1) != word.length() + 1; k++)
+                    {
+                        temp += wordSearch[i][k];
+                    }
+                    if(temp == word)
+                    {
+                        return true;
+                    }
+                }                                    
+            }
+        }
+    }
+
+    return false;
+}
+
 int main() 
 {
     string s = "hello";
@@ -254,6 +434,43 @@ int main()
     cout << hasValidParens(parens1) << endl;
     cout << hasValidParens(parens2) << endl;
     cout << hasValidParens(parens3) << endl;
+
+
+    vector<int> energy = {5, 2, -10, -5, 1};
+    int k = 3;
+    cout << getMaxEnergy(energy, k) << endl;
+    energy = {-2, -3, -1};
+    k = 2;
+    cout << getMaxEnergy(energy, k) << endl;
+
+    cout << "canJump" << endl;
+    vector<int> nums = {2, 3, 1, 1, 4};
+    cout << canJump(nums) << endl;
+    nums = {3, 2, 1, 0, 4};
+    cout << canJump(nums) << endl;
+    nums = {3, 1, 0, 1, 4};
+    cout << canJump(nums) << endl;
+    nums = {400, 0, 0, 0, 0};
+    cout << canJump(nums) << endl;
+
+    array<array<char, 5>, 6> grid; // 6 (rows) x 5 (columns) array
+    // example word search from https://www.eslprintables.com/previews/845364_1-Simple_Word_Search.jpg
+    grid = {{{'C', 'A', 'T', 'C', 'M'},
+             {'Y', 'Z', 'A', 'B', 'A'},
+             {'D', 'O', 'G', 'B', 'T'},
+             {'V', 'P', 'Q', 'O', 'B'},
+             {'Q', 'D', 'A', 'X', 'A'},
+             {'S', 'B', 'S', 'S', 'T'}}};
+
+    string word = "BAT";
+    cout << word << endl;
+    cout << hasWord(grid, word) << endl;
+    word = "VOA";
+    cout << word << endl;
+    cout << hasWord(grid, word) << endl;
+    word = "ABC";
+    cout << word << endl;
+    cout << hasWord(grid, word) << endl;
 
     string words = "hello world";
     cout << reverseWords(words) << endl;
